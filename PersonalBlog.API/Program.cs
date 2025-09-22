@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
 // Global Exception Handling Middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 // CORS - Must be before Authorization and Controller mapping
 app.UseCors(app.Environment.IsDevelopment() ? "AllowReactApp" : "Production");
@@ -106,7 +106,7 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     try
     {
-        await context.Database.EnsureCreatedAsync();
+        //await context.Database.EnsureCreatedAsync();
         // Uncomment the line below if you want to use migrations instead
         await context.Database.MigrateAsync();
     }
