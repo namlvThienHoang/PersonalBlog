@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PersonalBlog.API.Data;
 
 #nullable disable
@@ -12,8 +12,8 @@ using PersonalBlog.API.Data;
 namespace PersonalBlog.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250922073047_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250922092956_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,53 +21,53 @@ namespace PersonalBlog.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("PersonalBlog.API.Models.Domain.BlogPost", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FeaturedImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsVisible")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("PublishedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("UrlHandle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -86,10 +86,10 @@ namespace PersonalBlog.API.Migrations
             modelBuilder.Entity("PersonalBlog.API.Models.Domain.BlogPostTag", b =>
                 {
                     b.Property<Guid>("BlogPostId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("TagId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("BlogPostId", "TagId");
 
@@ -102,17 +102,17 @@ namespace PersonalBlog.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("UrlHandle")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
@@ -124,19 +124,19 @@ namespace PersonalBlog.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c3035a20-1b85-4a05-a6ec-dfaddda0c9f8"),
+                            Id = new Guid("752f16c7-4584-4e49-8896-d505057f04ba"),
                             Name = "Technology",
                             UrlHandle = "technology"
                         },
                         new
                         {
-                            Id = new Guid("fba12d6e-41e5-4af9-b372-9c820421450b"),
+                            Id = new Guid("0e3fd9bd-0645-4809-8931-104b95245c04"),
                             Name = "Programming",
                             UrlHandle = "programming"
                         },
                         new
                         {
-                            Id = new Guid("07d24d25-3cee-4ebe-bbef-15447ae1273d"),
+                            Id = new Guid("a2d213cf-62c0-4127-b8da-77a7e4151a9c"),
                             Name = "Web Development",
                             UrlHandle = "web-development"
                         });
@@ -146,17 +146,17 @@ namespace PersonalBlog.API.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("UrlHandle")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -168,31 +168,31 @@ namespace PersonalBlog.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d488b212-dc12-4e1e-9527-de056a3967af"),
+                            Id = new Guid("9b4d8833-cc77-4606-a0b8-f807873d65e3"),
                             Name = "C#",
                             UrlHandle = "csharp"
                         },
                         new
                         {
-                            Id = new Guid("2d45e1c1-b808-4d38-bd68-a576846f873b"),
+                            Id = new Guid("c0a7938e-81cc-4d69-8f2f-b1ed8df3ac5a"),
                             Name = ".NET",
                             UrlHandle = "dotnet"
                         },
                         new
                         {
-                            Id = new Guid("95bb03b1-e56b-4705-a11c-91e4ea333cab"),
+                            Id = new Guid("9f1bf908-8c19-4072-9b22-bf463e39231d"),
                             Name = "Entity Framework",
                             UrlHandle = "entity-framework"
                         },
                         new
                         {
-                            Id = new Guid("966a89f1-abbc-4355-b101-d470513047fe"),
+                            Id = new Guid("1f8b3dbd-b57c-4a02-b9e8-37a4daebce4c"),
                             Name = "API",
                             UrlHandle = "api"
                         },
                         new
                         {
-                            Id = new Guid("3fd4e6e1-14cf-4255-9c78-5dbb8a71cf08"),
+                            Id = new Guid("bf1d9c57-8ea7-496a-9275-6dd53322296d"),
                             Name = "React",
                             UrlHandle = "react"
                         });

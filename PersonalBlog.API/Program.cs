@@ -34,8 +34,9 @@ builder.Services.AddSwaggerGen(options =>
 // Database Configuration
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 
 // Repository Pattern - Dependency Injection
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();

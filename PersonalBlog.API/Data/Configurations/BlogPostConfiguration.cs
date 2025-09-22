@@ -29,7 +29,7 @@ namespace PersonalBlog.API.Data.Configurations
                 .HasMaxLength(500);
 
             builder.Property(x => x.PublishedDate)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
 
             // Relationships
             builder.HasOne(x => x.Category)
