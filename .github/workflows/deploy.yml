@@ -2,8 +2,8 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches:
-      - master   # chỉ build khi push lên nhánh main
+    tags:
+      - "*"   # bất kỳ khi nào tạo tag mới (ví dụ v1.0.0)
 
 jobs:
   build:
@@ -27,4 +27,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/personal-blog:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/personal-blog:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/personal-blog:${{ github.ref_name }}
