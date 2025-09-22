@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main   # chỉ build khi push lên nhánh main
+      - master   # chỉ build khi push lên nhánh main
 
 jobs:
   build:
