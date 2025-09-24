@@ -60,7 +60,7 @@ builder.Services.AddCors(options =>
     // For production, you might want to add specific domains
     options.AddPolicy("Production", policy =>
     {
-        policy.WithOrigins("https://yourdomain.com", "https://www.yourdomain.com")
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
